@@ -35,9 +35,10 @@
                 <h2>Pasos:</h2>
                 <ul>
                     {% for paso in pasos %}
-                        <li><strong>{{ paso.regla }}:</strong> {{ paso.expresion|safe }}</li>
+                        <li><strong>{{ paso.regla }}:</strong> <br>{{ paso.expresion|safe }}</li>
                     {% endfor %}
-                </ul>
+                        
+                    </ul>
             {% endif %}
         </div>
 
