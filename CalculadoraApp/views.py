@@ -46,52 +46,55 @@ def inicio(request):
             #PRODUCTO TRIPLE LO DEJAMOS PARA OTRO DIA XDDD
             # Generar pasos (personaliza según tus necesidades)
             print(f"\nFUNCIÓN ORIGINAL: {funcion}")
+            to = r'{\quad \to \quad}' # Es la flecha hacia la derecha, y con espacios a los lados
+            squareroot = r'\sqrt{x}'
             x = symbols('x')
 
             if es_raiz(funcion):
                 print("🔹 TIPO: Función con raíz")
                 print("   Reescribiendo como exponente y derivando...")
+                # Me faltó esto.
                 pasos= [
-                    {"Regla":"PASO A PASO LA RAIZ",
-                     "expresion": "Expresion de ejemplo  --> √x"},
+                    {"regla":"PASO A PASO LA RAIZ",
+                     "expresion": f"Expresion de ejemplo  {to} {squareroot}"},
                     {"regla": "Paso 1: Convertir la raiz en un exponente", 
-                    "expresion": "√x    -->  x^1/2"},
+                    "expresion": rf"{squareroot}    {to}  x^\frac1 2"},
                     {"regla": "Paso 2: Baja el exponente", 
-                    "expresion": "x^1/2    -->  1/2(x)^1/2"},
+                    "expresion": rf"x^\frac1 2   {to} \frac1 2 x^\frac1 2"}, # 1/2(x)^1/2
                     {"regla": "Paso 3: Resta el exponente", 
-                    "expresion": "1/2(x)^1/2 -->  1/2(x)^1/2-1"},
+                    "expresion": rf"\frac1 2x^\frac1 2 {to}  \frac1 2x^\frac1 2-1"}, # 1/2(x)^1/2-1
                     {"regla": "Paso 4: Deriva lo que estaba en la raiz", 
-                    "expresion": "x -->  1"},
+                    "expresion": rf"x {to}  1"},
                     {"regla": "Paso 5: Multiplica por la derivada", 
-                    "expresion": "1/2(x)^1/2-1 -->  (1/2(x)^1/2-1)*(x)"},
+                    "expresion": rf"\frac1 2x^\frac1 2-1 {to} ( \frac1 2x^\frac1 2-1)*x"}, # (1/2(x)^1/2-1)*(x)
                     {"Titulo":"PASOS EXTRA SI HAY EXPONENTE NEGATIVO"},
                     {"regla": "Paso 6: Cambia de signo el exponente negativo a base de una fraccion", 
-                    "expresion": "(1/2(x)^1/2-1)*(x) -->  (1/2*(x)/(x)^1/2-1)"},
+                    "expresion": rf"( \frac1 2x^\frac1 2-1)*x {to} ( \frac1 2x^\frac1 2-1)"}, #(1/2*(x)/(x)^1/2-1)
                 ]
             elif es_binomio(funcion):
                 print("🔹 TIPO: Binomio")
                 print("   Aplicando regla de la cadena...")
                 pasos= [
-                    {"Regla":"PASO A PASO EL BINOMIO",
-                     "expresion": "Expresion de ejemplo  -->(x^2-nx)(x^3+nx)"},
+                    {"regla":"PASO A PASO EL BINOMIO",
+                     "expresion": f"Expresion de ejemplo  {to} (x^2-nx)(x^3+nx)"},
                     {"regla": "Paso 1: Derivar el Primero", 
-                    "expresion": "(x^2-nx)    -->  (2x-n)"},
+                    "expresion": f"(x^2-nx) {to} (2x-n)"},
                     {"regla": "Paso 2: Deriva el segundo", 
-                    "expresion": "(x^3+nx)    -->  (3x^2-n)"},
+                    "expresion": f"(x^3+nx)    {to} (3x^2-n)"},
                     {"regla": "Paso 3: Multiplica el Primero por la derivada del segundo", 
-                    "expresion": "(x^2-nx)(3x^2-n)"},
+                    "expresion": f"(x^2-nx) {to} (3x^2-n)"},
                     {"regla": "Paso 4: Sumar la Multiplicacion del Segundo por la derivada del Primero", 
-                    "expresion": "(x^2-nx)(3x^2-n) -->  (x^2-nx)(3x^2-n)+(x^3+nx)(2x-n)"},
+                    "expresion": f"(x^2-nx)(3x^2-n) {to} (x^2-nx)(3x^2-n)+(x^3+nx)(2x-n)"},
                     {"regla": "Paso 5: Multiplica los productos", 
-                    "expresion": "(x^2-nx)(3x^2-n) -->  (3x^4-nx^2-3nx^2+2nx)"},
+                    "expresion": f"(x^2-nx)(3x^2-n) {to} (3x^4-nx^2-3nx^2+2nx)"},
                     {"regla": "Paso 6: Suma", 
-                    "expresion": "(3x^4-nx^2-3nx^2+2nx) -->  (3x^4-4nx^2+2nx)"},
+                    "expresion": f"(3x^4-nx^2-3nx^2+2nx) {to} (3x^4-4nx^2+2nx)"},
                     {"regla": "Paso 7: Multiplica los otros productos", 
-                    "expresion": "(x^3+nx)(2x-n) -->  (x^3*2x+x^3*(-n)+nx*2x+nx*(-n))"},
+                    "expresion": f"(x^3+nx)(2x-n) {to} (x^3*2x+x^3*(-n)+nx*2x+nx*(-n))"},
                     {"regla": "Paso 8: Suma", 
-                    "expresion": "(x^3*2x+x^3*(-n)+nx*2x+nx*(-n)) -->  2x^4-nx^3+2x^2n-n^2x"},
+                    "expresion": f"(x^3*2x+x^3*(-n)+nx*2x+nx*(-n)) {to}  (2x^4-nx^3+2x^2n-n^2x)"},
                     {"regla": "Paso 9: Suma todo", 
-                    "expresion": "3x^4-4nx^2+2nx+2x^4-nx^3+2x^2n-n^2x -->  5x^4-nx^3-2nx^2+(2n-n^2)x"},
+                    "expresion": f"(3x^4-4nx^2+2nx+2x^4-nx^3+2x^2n-n^2x) {to} (5x^4-nx^3-2nx^2+(2n-n^2x))"},
                 ]
 
             elif es_mono(funcion):
@@ -99,23 +102,23 @@ def inicio(request):
                 print("   Paso 1: Aplicar regla de la potencia a cada término.")
                 pasos= [
                     {"regla": "PASO A PASO MONOMIO", 
-                    "expresion": "Expresion de ejemplo -->  3x^4"},
+                    "expresion": f"Expresion de ejemplo {to}  3x^4"},
                     {"regla": "Bajar el exponente", 
-                    "expresion": "3x^4    -->  4*3x^4"},
+                    "expresion": f"3x^4    {to}  4*3x^4"},
                     {"regla": "Restarle 1 al exponente", 
-                    "expresion": "4*3x^4-1    -->  4*3x^3"},
+                    "expresion": f"4*3x^4-1    {to}  4*3x^3"},
                     {"regla": "Multiplicar", 
-                    "expresion": "4*3x^3    -->  12x^3"},
+                    "expresion": f"4*3x^3    {to}  12x^3"},
                 ]
             #por ahora no funciona
             elif es_solo_x_o_x_potencia(funcion):
                 pasos= [
                     {"regla": "Paso 1: Divide el exponente  |   ", 
-                    "expresion": "x^2    -->  2*x^2"},
+                    "expresion": f"x^2    {to}  2*x^2"},
                     {"regla": "Paso 2: Multiplicalo por coeficiente (x)", 
-                    "expresion": "x^2    -->  2x^2"},
+                    "expresion": f"x^2    {to}  2x^2"},
                     {"regla": "Paso 3: Resta el exponente", 
-                    "expresion": "2x^2-1 -->  2x^1  --> 2x"},
+                    "expresion": f"2x^2-1 {to}  2x^1  {to} 2x"},
                 ]
                 print(pasos)
 
@@ -126,7 +129,7 @@ def inicio(request):
                 derivada = 0
                 pasos= [
                     {"regla": "TODA FUNCION QUE SEA CONSTANTE SERA 0", 
-                    "expresion": "2    -->  0"}
+                    "expresion": f"2    {to}  0"}
                 ]
             else:
                 print("🔹 TIPO: No reconocido (derivando genéricamente)")

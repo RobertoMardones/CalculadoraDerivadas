@@ -33,12 +33,25 @@
                 <p>\[ \frac{d}{dx} \left( {{ funcion }} \right) = {{ derivada }} \]</p>
                 
                 <h2>Pasos:</h2>
-                <ul>
+                <div>
                     {% for paso in pasos %}
-                        <li><strong>{{ paso.regla }}:</strong> <br>{{ paso.expresion|safe }}</li>
-                    {% endfor %}
+                    
+                    {% if paso.regla  %}
+                        <ul>
+                            <div class="container bg-white bg-opacity-75 rounded-5 border border-success p-4 text-center">
+                                <strong>{{ paso.regla }}:</strong> <br>\[ {{ paso.expresion|safe }} \]
+                            </div>
+                        </ul>        
+                    {% else %}
+                            <div class="container bg-danger rounded-5 mx-3 my-3 py-4 text-center">
+                                <strong>{{ paso.Titulo }}:</strong>
+                            </div>
+                    {% endif %}
                         
+                    {% endfor %}
                     </ul>
+                </div>
+
             {% endif %}
         </div>
 
